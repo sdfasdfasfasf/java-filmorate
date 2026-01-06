@@ -32,10 +32,7 @@ public class ErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-        String errorMessage = e.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .findFirst()
-                .orElse("Ошибка валидации");
+        String errorMessage = e.getBindingResult().getFieldErrors().stream().map(error -> error.getField() + ": " + error.getDefaultMessage()).findFirst().orElse("Ошибка валидации");
         log.error("Ошибка валидации: {}", errorMessage);
         return Map.of("error", errorMessage);
     }
