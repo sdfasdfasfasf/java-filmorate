@@ -1,62 +1,69 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.service.UserService;
 import jakarta.validation.Valid;
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @Slf4j
 public class UserController {
-    private final Map<Long, User> users = new HashMap<>();
-    private long userId = 1L;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public User create(@Valid @RequestBody User user) {
-        validateUser(user);
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-        user.setId(userId++);
-        users.put(user.getId(), user);
-        log.info("Добавлен пользователь: {}", user.getLogin());
-        return user;
+        log.info("POST /users - создание пользователя");
+        return userService.create(user);
     }
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
-        if (user.getId() == null || !users.containsKey(user.getId())) {
-            log.error("Пользователь с id={} не найден", user.getId());
-            throw new NotFoundException("Пользователь с таким id не найден");
-        }
-        validateUser(user);
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-        users.put(user.getId(), user);
-        log.info("Обновлен пользователь с id={}", user.getId());
-        return user;
+        log.info("PUT /users - обновление пользователя с ID: {}", user.getId());
+        return userService.update(user);
     }
 
     @GetMapping
     public List<User> getAll() {
-        log.info("Получен запрос на получение всех пользователей. Количество: {}", users.size());
-        return new ArrayList<>(users.values());
+        log.info("GET /users - получение всех пользователей");
+        return userService.getAll();
     }
 
-    private void validateUser(User user) {
-        if (user.getBirthday() == null) {
-            log.error("Дата рождения не указана");
-            throw new ValidationException("Дата рождения обязательна");
-        }
+    @GetMapping("/{id}")
+    public User getById(@PathVariable Long id) {
+        log.info("GET /users/{} - получение пользователя по ID", id);
+        return userService.getById(id);
+    }
 
-        if (user.getBirthday().isAfter(java.time.LocalDate.now())) {
-            log.error("Дата рождения {} находится в будущем", user.getBirthday());
-            throw new ValidationException("Дата рождения не может быть в будущем");
-        }
+    @PutMapping("/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        log.info("PUT /users/{}/friends/{} - добавление друга", id, friendId);
+        userService.addFriend(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public void removeFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        log.info("DELETE /users/{}/friends/{} - удаление друга", id, friendId);
+        userService.removeFriend(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public List<User> getFriends(@PathVariable Long id) {
+        log.info("GET /users/{}/friends - получение друзей пользователя", id);
+        return userService.getFriends(id);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public List<User> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) {
+        log.info("GET /users/{}/friends/common/{} - получение общих друзей", id, otherId);
+        return userService.getCommonFriends(id, otherId);
     }
 }
