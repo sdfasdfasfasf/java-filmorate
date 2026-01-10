@@ -34,7 +34,7 @@ class UserControllerTest {
         mockMvc.perform(post("/users")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.login").value("login"));
     }
 
@@ -49,7 +49,7 @@ class UserControllerTest {
         mockMvc.perform(post("/users")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("login"));
     }
 
