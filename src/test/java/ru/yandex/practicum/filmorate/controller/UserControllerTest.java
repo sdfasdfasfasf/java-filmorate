@@ -32,11 +32,7 @@ class UserControllerTest {
         user.setBirthday(LocalDate.of(2000, 1, 1));
         user.setName("name2");
 
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.login").value("loginnew"));
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andExpect(jsonPath("$.login").value("loginnew"));
     }
 
     @Test
@@ -46,10 +42,7 @@ class UserControllerTest {
         user.setLogin("login");
         user.setBirthday(LocalDate.of(2000, 1, 1));
 
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -59,10 +52,7 @@ class UserControllerTest {
         user.setLogin("login");
         user.setBirthday(LocalDate.now().plusDays(1)); // Завтра
 
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -72,10 +62,7 @@ class UserControllerTest {
         user.setLogin("");
         user.setBirthday(LocalDate.of(2000, 1, 1));
 
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -85,9 +72,6 @@ class UserControllerTest {
         user.setLogin("log in");
         user.setBirthday(LocalDate.of(2000, 1, 1));
 
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 }

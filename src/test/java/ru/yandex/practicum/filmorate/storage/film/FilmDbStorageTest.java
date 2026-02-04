@@ -64,8 +64,7 @@ class FilmDbStorageTest extends BaseDbStorageTest {
         List<Film> films = filmStorage.getAll();
 
         assertThat(films).hasSize(2);
-        assertThat(films).extracting(Film::getName)
-                .containsExactlyInAnyOrder("Film 1", "Film 2");
+        assertThat(films).extracting(Film::getName).containsExactlyInAnyOrder("Film 1", "Film 2");
     }
 
     @Test

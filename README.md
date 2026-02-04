@@ -1,5 +1,3 @@
 # java-filmorate
 
-## Схема бд - ./shcema.png 
-
-
+## Схема бд - ./shcema.png

@@ -29,24 +29,36 @@ public class Mpa {
     // Метод для получения американской системы рейтингов
     public static String getAmericanName(Integer id) {
         switch (id) {
-            case 1: return "G";
-            case 2: return "PG";
-            case 3: return "PG-13";
-            case 4: return "R";
-            case 5: return "NC-17";
-            default: throw new IllegalArgumentException("Неизвестный ID рейтинга MPA: " + id);
+            case 1:
+                return "G";
+            case 2:
+                return "PG";
+            case 3:
+                return "PG-13";
+            case 4:
+                return "R";
+            case 5:
+                return "NC-17";
+            default:
+                throw new IllegalArgumentException("Неизвестный ID рейтинга MPA: " + id);
         }
     }
 
     // Метод для получения российских названий (если нужно)
     public static String getRussianName(Integer id) {
         switch (id) {
-            case 1: return "0+";
-            case 2: return "6+";
-            case 3: return "12+";
-            case 4: return "16+";
-            case 5: return "18+";
-            default: throw new IllegalArgumentException("Неизвестный ID рейтинга MPA: " + id);
+            case 1:
+                return "0+";
+            case 2:
+                return "6+";
+            case 3:
+                return "12+";
+            case 4:
+                return "16+";
+            case 5:
+                return "18+";
+            default:
+                throw new IllegalArgumentException("Неизвестный ID рейтинга MPA: " + id);
         }
     }
 }

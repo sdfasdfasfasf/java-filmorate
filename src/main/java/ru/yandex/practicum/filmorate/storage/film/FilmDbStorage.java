@@ -65,8 +65,8 @@ public class FilmDbStorage implements FilmStorage {
     public Film create(Film film) {
         List<Genre> genres = film.getGenres();
 
-        if(genres != null) {
-            if(genres.size() > 0) {
+        if (genres != null) {
+            if (genres.size() > 0) {
                 List<Genre> uniqueGenres = genres.stream()
                         .collect(Collectors.collectingAndThen(
                                 Collectors.toMap(
@@ -82,20 +82,19 @@ public class FilmDbStorage implements FilmStorage {
                 for (int i = 0; i < uniqueGenres.size(); i++) {
                     Integer genreId = uniqueGenres.get(i).getId();
 
-                    if(genreId != null) {
+                    if (genreId != null) {
                         Optional<Genre> genre = genreStorage.findById(genreId);
                         if (genre.isEmpty()) {
                             throw new NotFoundException("Жанр с id=" + genreId + " не найден");
                         }
-                    }
-                    else {
+                    } else {
                         throw new NotFoundException("Жанр с id=" + genreId + " не найден");
                     }
                 }
             }
         }
 
-        if(film.getReleaseDate().isBefore(LocalDate.of(1895, 1, 1))) {
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 1, 1))) {
             throw new ValidationException("Фильма с датой выпуска =" + film.getReleaseDate() + " нет");
         }
 
