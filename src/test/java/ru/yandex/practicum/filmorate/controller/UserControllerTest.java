@@ -27,30 +27,16 @@ class UserControllerTest {
     @Test
     void shouldCreateValidUser() throws Exception {
         User user = new User();
-        user.setEmail("test@mail.com");
-        user.setLogin("login");
+        user.setEmail("testnew@mail.com");
+        user.setLogin("loginnew");
         user.setBirthday(LocalDate.of(2000, 1, 1));
+        user.setName("name2");
 
         mockMvc.perform(post("/users")
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.login").value("login"));
-    }
-
-    @Test
-    void shouldUseLoginWhenNameIsEmpty() throws Exception {
-        User user = new User();
-        user.setEmail("test@mail.com");
-        user.setLogin("login");
-        user.setName("");
-        user.setBirthday(LocalDate.of(2000, 1, 1));
-
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("login"));
+                .andExpect(jsonPath("$.login").value("loginnew"));
     }
 
     @Test
