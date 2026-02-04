@@ -9,14 +9,13 @@ import jakarta.validation.constraints.Size;
 @Getter
 @Setter
 public class Mpa {
-    //@NotNull(message = "ID рейтинга MPA не может быть null")
+    @NotNull(message = "ID рейтинга MPA не может быть null")
     private Integer id;
 
-    //@NotBlank(message = "Название рейтинга MPA не может быть пустым")
-    //@Size(max = 10, message = "Название рейтинга MPA не может превышать 10 символов")
+    @Size(max = 10, message = "Название рейтинга MPA не может превышать 10 символов")
     private String name;
 
-    //@Size(max = 255, message = "Описание рейтинга MPA не может превышать 255 символов")
+    @Size(max = 255, message = "Описание рейтинга MPA не может превышать 255 символов")
     private String description;
 
     public Mpa() {

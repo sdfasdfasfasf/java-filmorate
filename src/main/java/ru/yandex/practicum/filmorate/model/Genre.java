@@ -9,11 +9,11 @@ import jakarta.validation.constraints.Size;
 @Getter
 @Setter
 public class Genre {
-    //@NotNull(message = "ID жанра не может быть null")
+    @NotNull(message = "ID жанра не может быть null")
     private Integer id;
 
-    //@NotBlank(message = "Название жанра не может быть пустым")
-    //@Size(max = 50, message = "Название жанра не может превышать 50 символов")
+    @NotBlank(message = "Название жанра не может быть пустым")
+    @Size(max = 50, message = "Название жанра не может превышать 50 символов")
     private String name;
 
     public Genre() {
