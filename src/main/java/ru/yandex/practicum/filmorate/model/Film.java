@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,10 +21,19 @@ public class Film {
     private String description;
 
     @NotNull(message = "Дата релиза обязательна")
+    @PastOrPresent(message = "Дата релиза не может быть в будущем")
     private LocalDate releaseDate;
 
     @Positive(message = "Продолжительность должна быть положительным числом")
     private Integer duration;
+
+    private Mpa mpa;
+
+    private List<Genre> genres;
+
+    public Integer getMpaId() {
+        return mpa != null ? mpa.getId() : null;
+    }
 
     private Set<Long> likes = new HashSet<>();
 

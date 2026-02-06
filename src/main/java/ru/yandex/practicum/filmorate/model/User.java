@@ -24,8 +24,10 @@ public class User {
     private String name;
 
     @PastOrPresent(message = "Дата рождения не может быть в будущем")
+    @NotNull(message = "Дата рождения обязательна")
     private LocalDate birthday;
 
+    // Односторонняя дружба (только те, кого пользователь добавил)
     private Set<Long> friends = new HashSet<>();
 
     public void addFriend(Long friendId) {
@@ -35,4 +37,5 @@ public class User {
     public void removeFriend(Long friendId) {
         friends.remove(friendId);
     }
+
 }
