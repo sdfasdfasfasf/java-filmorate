@@ -27,12 +27,12 @@ class UserControllerTest {
     @Test
     void shouldCreateValidUser() throws Exception {
         User user = new User();
-        user.setEmail("testnew@mail.com");
-        user.setLogin("loginnew");
-        user.setBirthday(LocalDate.of(2000, 1, 1));
-        user.setName("name2");
+        user.setEmail("testt@mail.com");
+        user.setLogin("testLogint");
+        user.setName("Test Namet");
+        user.setBirthday(LocalDate.of(1990, 1, 1));
 
-        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andExpect(jsonPath("$.login").value("loginnew"));
+        mockMvc.perform(post("/users").content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andExpect(jsonPath("$.login").value("testLogint"));
     }
 
     @Test
