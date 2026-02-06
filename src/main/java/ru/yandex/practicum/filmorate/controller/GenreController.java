@@ -2,10 +2,11 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
+
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
+import ru.yandex.practicum.filmorate.service.GenreService;
 
 import java.util.List;
 
@@ -15,18 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenreController {
 
-    private final GenreStorage genreStorage;
+    private final GenreService genreService;
 
     @GetMapping
-    public List<Genre> getAllGenres() {
+    public ResponseEntity<List<Genre>> getAllGenres() {
         log.info("Запрос на получение всех жанров");
-        return genreStorage.findAll();
+        List<Genre> genres = genreService.findAll();
+        return ResponseEntity.ok(genres);
     }
 
     @GetMapping("/{id}")
-    public Genre getGenreById(@PathVariable Integer id) {
+    public ResponseEntity<Genre> getGenreById(@PathVariable Integer id) {
         log.info("Запрос на получение жанра с id: {}", id);
-        return genreStorage.findById(id)
-                .orElseThrow(() -> new NotFoundException("Жанр с id=" + id + " не найден"));
+        Genre genre = genreService.findById(id);
+        return ResponseEntity.ok(genre);
     }
 }
